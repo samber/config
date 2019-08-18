@@ -1,14 +1,14 @@
 # Config
-[![Documentation](https://godoc.org/github.com/JeremyLoy/config?status.svg)](http://godoc.org/github.com/JeremyLoy/config)
+[![Documentation](https://godoc.org/github.com/samber/config?status.svg)](http://godoc.org/github.com/samber/config)
 [![Mentioned in Awesome Go](https://awesome.re/mentioned-badge-flat.svg)](https://github.com/avelino/awesome-go)
-[![Build Status](https://travis-ci.org/JeremyLoy/config.svg?branch=master)](https://travis-ci.org/JeremyLoy/config)
-[![Go Report Card](https://goreportcard.com/badge/github.com/JeremyLoy/config)](https://goreportcard.com/report/github.com/JeremyLoy/config)
-[![Coverage Status](https://coveralls.io/repos/github/JeremyLoy/config/badge.svg?branch=master)](https://coveralls.io/github/JeremyLoy/config?branch=master)
-[![GitHub issues](https://img.shields.io/github/issues/JeremyLoy/config.svg)](https://github.com/JeremyLoy/config/issues)
-[![license](https://img.shields.io/github/license/JeremyLoy/config.svg?maxAge=2592000)](https://github.com/JeremyLoy/config/LICENSE)
-[![Release](https://img.shields.io/github/release/JeremyLoy/config.svg?label=Release)](https://github.com/JeremyLoy/config/releases)
+[![Build Status](https://travis-ci.org/samber/config.svg?branch=master)](https://travis-ci.org/samber/config)
+[![Go Report Card](https://goreportcard.com/badge/github.com/samber/config)](https://goreportcard.com/report/github.com/samber/config)
+[![Coverage Status](https://coveralls.io/repos/github/samber/config/badge.svg?branch=master)](https://coveralls.io/github/samber/config?branch=master)
+[![GitHub issues](https://img.shields.io/github/issues/samber/config.svg)](https://github.com/samber/config/issues)
+[![license](https://img.shields.io/github/license/samber/config.svg?maxAge=2592000)](https://github.com/samber/config/LICENSE)
+[![Release](https://img.shields.io/github/release/samber/config.svg?label=Release)](https://github.com/samber/config/releases)
 
-**Samber EDIT => Removed PARENT_CHILD nested environment variables**
+**Samber EDIT => Removed PARENT__CHILD nested environment variables**
 
 Manage your application config as a typesafe struct in as little as two function calls.
 
