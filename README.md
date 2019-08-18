@@ -8,6 +8,8 @@
 [![license](https://img.shields.io/github/license/JeremyLoy/config.svg?maxAge=2592000)](https://github.com/JeremyLoy/config/LICENSE)
 [![Release](https://img.shields.io/github/release/JeremyLoy/config.svg?label=Release)](https://github.com/JeremyLoy/config/releases)
 
+**Samber EDIT => Removed PARENT_CHILD nested environment variables**
+
 Manage your application config as a typesafe struct in as little as two function calls.
 
 ```go
@@ -24,19 +26,17 @@ config.FromEnv().To(&c)
 
 ## How It Works
 
-Its just simple, pure stdlib. 
+Its just simple, pure stdlib.
 
 * A field's type determines what [strconv](https://golang.org/pkg/strconv/) function is called.
 * All string conversion rules are as defined in the [strconv](https://golang.org/pkg/strconv/) package
-* If chaining multiple data sources, data sets are merged. 
+* If chaining multiple data sources, data sets are merged.
   Later values override previous values.
   ```go
   config.From("dev.config").FromEnv().To(&c)
   ```
-    
-* Unset values remain as their native [zero value](https://tour.golang.org/basics/12) 
-* Nested structs/subconfigs are delimited with double underscore 
-    * e.g. `PARENT__CHILD`
+
+* Unset values remain as their native [zero value](https://tour.golang.org/basics/12)
 * Env vars map to struct fields case insensitively
     * NOTE: Also true when using struct tags.
 
@@ -48,15 +48,15 @@ Its just simple, pure stdlib.
 * Composeable:
     * Merge local files and environment variables for effortless local development.
 * small:
-    * only stdlib 
+    * only stdlib
     * < 180 LoC
-    
+
 ## Design Philosophy
 
-Opinionated and narrow in scope. This library is only meant to do config binding. 
-Feel free to use it on its own, or alongside other libraries.  
+Opinionated and narrow in scope. This library is only meant to do config binding.
+Feel free to use it on its own, or alongside other libraries.
 
-* Only structs at the entry point. This keeps the API surface small.  
+* Only structs at the entry point. This keeps the API surface small.
 
 * Slices are space delimited. This matches how environment variables and commandline args are handled by the `go` cmd.
 

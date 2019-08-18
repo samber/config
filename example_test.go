@@ -11,7 +11,7 @@ import (
 )
 
 type MySubConfig struct {
-	IPWhitelist []string
+	IPWhitelist []string `config:"SUBCONFIG_IPWHITELIST"`
 }
 
 type MyConfig struct {
@@ -27,7 +27,7 @@ func Example() {
 	os.Setenv("PORT", "1234")
 	os.Setenv("FEATURE_FLAG", "true") // also accepts t, f, 0, 1 etc. see strconv package.
 	// Double underscore for sub structs. Space separation for slices.
-	os.Setenv("SUBCONFIG__IPWHITELIST", "0.0.0.0 1.1.1.1 2.2.2.2")
+	os.Setenv("SUBCONFIG_IPWHITELIST", "0.0.0.0 1.1.1.1 2.2.2.2")
 
 	var c MyConfig
 	config.FromEnv().To(&c)

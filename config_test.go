@@ -32,8 +32,8 @@ func Test_Integration(t *testing.T) {
 		"A=1",
 		"B=abc",
 		"C=4 5 6",
-		"DoG__E=true",
-		"DoG__FErDINANd=true",
+		"E=true",
+		"FErDINANd=true",
 	}, "\n")
 	_, err = file.Write([]byte(testData))
 	if err != nil {
@@ -312,7 +312,6 @@ func Test_getKey(t *testing.T) {
 	t.Parallel()
 	type args struct {
 		t      reflect.StructField
-		prefix string
 	}
 	tests := []struct {
 		name string
@@ -326,9 +325,8 @@ func Test_getKey(t *testing.T) {
 					Name: "name",
 					Tag:  "",
 				},
-				prefix: "pre__",
 			},
-			want: "pre__name",
+			want: "name",
 		},
 		{
 			name: "no tag - mixed case",
@@ -337,9 +335,8 @@ func Test_getKey(t *testing.T) {
 					Name: "nAMe",
 					Tag:  "",
 				},
-				prefix: "pRe__",
 			},
-			want: "pre__name",
+			want: "name",
 		},
 		{
 			name: "empty tag",
@@ -348,9 +345,8 @@ func Test_getKey(t *testing.T) {
 					Name: "name",
 					Tag:  "config:\"\"",
 				},
-				prefix: "pre__",
 			},
-			want: "pre__name",
+			want: "name",
 		},
 		{
 			name: "whitespace tag",
@@ -359,9 +355,8 @@ func Test_getKey(t *testing.T) {
 					Name: "name",
 					Tag:  "config:\"    \"",
 				},
-				prefix: "pre__",
 			},
-			want: "pre__name",
+			want: "name",
 		},
 		{
 			name: "tag",
@@ -370,16 +365,15 @@ func Test_getKey(t *testing.T) {
 					Name: "name",
 					Tag:  "config:\"  tag  \"",
 				},
-				prefix: "pre__",
 			},
-			want: "pre__tag",
+			want: "tag",
 		},
 	}
 	for _, tt := range tests {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			if got := getKey(tt.args.t, tt.args.prefix); got != tt.want {
+			if got := getKey(tt.args.t); got != tt.want {
 				t.Errorf("getKey() = %v, want %v", got, tt.want)
 			}
 		})

@@ -15,9 +15,6 @@
 //
 // Unset values remain as their native zero value: https://tour.golang.org/basics/12.
 //
-// Nested structs/subconfigs are delimited with double underscore.
-//   PARENT__CHILD
-//
 // Env vars map to struct fields case insensitively.
 // NOTE: Also true when using struct tags.
 package config
@@ -33,21 +30,19 @@ import (
 
 const (
 	structTagKey = "config"
-	structDelim  = "__"
 	sliceDelim   = " "
 )
 
 // Builder contains the current configuration state.
 type Builder struct {
-	structDelim, sliceDelim string
-	configMap               map[string]string
+	sliceDelim string
+	configMap  map[string]string
 }
 
 func newBuilder() *Builder {
 	return &Builder{
-		configMap:   make(map[string]string),
-		structDelim: structDelim,
-		sliceDelim:  sliceDelim,
+		configMap:  make(map[string]string),
+		sliceDelim: sliceDelim,
 	}
 }
 
@@ -60,7 +55,7 @@ func newBuilder() *Builder {
 //     * target is not a struct pointer
 //     * struct contains unsupported fields (pointers, maps, slice of structs, channels, arrays, funcs, interfaces, complex)
 func (c *Builder) To(target interface{}) {
-	c.populateStructRecursively(target, "")
+	c.populateStructRecursively(target)
 }
 
 // From returns a new Builder, populated with the values from file.
@@ -124,19 +119,18 @@ func stringsToMap(ss []string) map[string]string {
 // populateStructRecursively populates each field of the passed in struct.
 // slices and values are set directly.
 // nested structs recurse through this function.
-// values are derived from the field name, prefixed with the field names of any parents.
-func (c *Builder) populateStructRecursively(structPtr interface{}, prefix string) {
+func (c *Builder) populateStructRecursively(structPtr interface{}) {
 	structValue := reflect.ValueOf(structPtr).Elem()
 	for i := 0; i < structValue.NumField(); i++ {
 		fieldType := structValue.Type().Field(i)
 		fieldPtr := structValue.Field(i).Addr().Interface()
 
-		key := getKey(fieldType, prefix)
+		key := getKey(fieldType)
 		value := c.configMap[key]
 
 		switch fieldType.Type.Kind() {
 		case reflect.Struct:
-			c.populateStructRecursively(fieldPtr, key+c.structDelim)
+			c.populateStructRecursively(fieldPtr)
 		case reflect.Slice:
 			convertAndSetSlice(fieldPtr, stringToSlice(value, c.sliceDelim))
 		default:
@@ -148,14 +142,14 @@ func (c *Builder) populateStructRecursively(structPtr interface{}, prefix string
 // getKey returns the string that represents this structField in the config map.
 // If the structField has the appropriate structTag set, it is used.
 // Otherwise, field's name is used.
-func getKey(t reflect.StructField, prefix string) string {
+func getKey(t reflect.StructField) string {
 	name := t.Name
 	if tag, exists := t.Tag.Lookup(structTagKey); exists {
 		if tag = strings.TrimSpace(tag); tag != "" {
 			name = tag
 		}
 	}
-	return strings.ToLower(prefix + name)
+	return strings.ToLower(name)
 }
 
 // stringToSlice converts a string to a slice of string, using delim.
