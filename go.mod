@@ -1,3 +1,3 @@
-module github.com/JeremyLoy/config
+module github.com/samber/config
 
 go 1.12
