@@ -145,7 +145,7 @@ func (c *Builder) populateStructRecursively(structPtr interface{}) {
 func getKey(t reflect.StructField) string {
 	name := t.Name
 	if tag, exists := t.Tag.Lookup(structTagKey); exists {
-		if tag = strings.TrimSpace(tag); tag != "" {
+		if tag = strings.TrimSpace(tag); tag != "" && tag != "-" {
 			name = tag
 		}
 	}
